@@ -13,7 +13,9 @@ width, height = base_image.size
 width_of_watermark, height_of_watermark = watermark.size
 position = (int(width/2-width_of_watermark/2), int(height/2-height_of_watermark/2))
 
+
 transparent = Image.new('RGBA', (width, height), (0, 0, 0, 0))
 transparent.paste(base_image, (0, 0))
 transparent.paste(watermark, position, mask=watermark)
+# Temporary name
 transparent.convert('RGB').save(output_image_path)
