@@ -1,9 +1,7 @@
 from PIL import Image
 import os
 
-input_image_path = "raw_images/unnamed.jpg"
 watermark_image_path = "watermark/jessicaschmidt_watermark.png"
-output_image_path = "watermarked_images/BIRD_GREEN_WATERMARKED.jpg"
 folder_dir = "raw_images"
 
 
