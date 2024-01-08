@@ -56,14 +56,8 @@ def convert_folder():
 
 
 ttk.Label(frame, text="Image Converter").grid(column=2, row=0)
-
 ttk.Button(frame, text="Convert Folder", command=convert_folder).grid(column=1, row=1)
 ttk.Button(frame, text="Quit", command=root.destroy).grid(column=3, row=1)
-
-
-
-
-
 ttk.Button(frame, text="Select Folder to Convert", command=find_directory)
 
 
