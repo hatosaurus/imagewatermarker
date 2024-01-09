@@ -1,14 +1,13 @@
 from converter import *
 from tkinter import *
-from tkinter import filedialog
-from tkinter import ttk
+from tkinter import filedialog, ttk, messagebox
 from PIL import UnidentifiedImageError
 import os
 
 
 root = Tk()
 root.title("Image Watermarking")
-root.geometry("400x400")
+root.geometry("400x250")
 frame = ttk.Frame(root, padding=10)
 frame.grid()
 
@@ -30,6 +29,8 @@ def find_directory():
 
 def convert_folder():
     folder = chosen_directory
+    if folder == "":
+        messagebox.showerror("Error", "Select a folder.")
     output_path = "watermarked_images"
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
