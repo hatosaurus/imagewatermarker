@@ -1,47 +1,38 @@
-from PIL import Image as PILImage, UnidentifiedImageError
-import os
+from converter import *
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
+from PIL import UnidentifiedImageError
+import os
 
-watermark_image_path = "watermark/jessicaschmidt_watermark.png"
-folder_dir = "raw_images"
 
-# TKinter setup
 root = Tk()
+root.title("Image Watermarking")
+root.geometry("400x400")
 frame = ttk.Frame(root, padding=10)
 frame.grid()
 
 
-def add_watermark(raw_image, watermark_image, output_path):
-    base_image = PILImage.open(raw_image)
-    watermark = PILImage.open(watermark_image)
-    # Get base parameters to apply to watermark
-    width, height = base_image.size
-    # Apply width for both parameters to keep watermark a square
-    watermark = watermark.resize((width, width))
-    # Find the new size of the watermark
-    width_of_watermark, height_of_watermark = watermark.size
-    # Centers the watermark on the image
-    position = (int(width / 2 - width_of_watermark / 2), int(height / 2 - height_of_watermark / 2))
-    # Create new image called transparent, it is the size of our base image
-    transparent = PILImage.new('RGBA', (width, height), (0, 0, 0, 0))
-    # Paste the base image in at a specific size
-    transparent.paste(base_image, (0, 0))
-    # Paste the watermark in at a specific size
-    transparent.paste(watermark, position, mask=watermark)
-    transparent.convert('RGB').save(output_path)
-    print(f"Watermarking complete for {raw_image}.")
-    return
+frame.grid_rowconfigure(0, weight=1)
+frame.grid_columnconfigure(0, weight=1)
+root.grid_rowconfigure(0, weight=1)
+root.grid_columnconfigure(0, weight=1)
+
+chosen_directory = ""
 
 
 def find_directory():
+    global chosen_directory
     root.directory = filedialog.askdirectory()
-    return root.directory
+    chosen_directory = root.directory
+    return chosen_directory
 
 
 def convert_folder():
-    folder = find_directory()
+    folder = chosen_directory
+    output_path = "watermarked_images"
+    if not os.path.isdir(output_path):
+        os.makedirs(output_path)
     for image in os.listdir(folder):
         try:
             image_path = f"{folder}/{image}"
@@ -55,10 +46,9 @@ def convert_folder():
             pass
 
 
-ttk.Label(frame, text="Image Converter").grid(column=2, row=0)
-ttk.Button(frame, text="Convert Folder", command=convert_folder).grid(column=1, row=1)
-ttk.Button(frame, text="Quit", command=root.destroy).grid(column=3, row=1)
-ttk.Button(frame, text="Select Folder to Convert", command=find_directory)
-
+ttk.Label(frame, text="Image Watermarking").grid(column=1, row=0, columnspan=1)
+ttk.Button(frame, text="Select Folder", command=find_directory).grid(column=0, row=2)
+ttk.Button(frame, text="Watermark All", command=convert_folder).grid(column=2, row=2)
+ttk.Button(frame, text="Quit", command=root.destroy).grid(column=1, row=3)
 
 root.mainloop()
