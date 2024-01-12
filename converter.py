@@ -1,7 +1,5 @@
 from PIL import Image as PILImage
 
-watermark_image_path = "watermark/jessicaschmidt_watermark.png"
-
 
 def add_watermark(raw_image, watermark_image, output_path):
     base_image = PILImage.open(raw_image)
@@ -21,6 +19,8 @@ def add_watermark(raw_image, watermark_image, output_path):
     # Paste the watermark in at a specific size
     transparent.paste(watermark, position, mask=watermark)
     transparent.convert('RGB').save(output_path)
+    if ValueError:
+        pass
     print(f"Watermarking complete for {raw_image}.")
     return
 
